@@ -1,4 +1,4 @@
-# Skills Exploration Tools
+# Skillnet Explorer
 
 This is a starter repository for projects in the CAS502 class in the School of Complex Adaptive Systems at Arizona State University. If you choose to use the code in this repository for your project, please clone it into your own account and work with your clone.
 
