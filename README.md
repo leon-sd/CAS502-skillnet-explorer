@@ -1,5 +1,27 @@
 # Skillnet Explorer
 
+## Project info
+
+**Team members**
+- Emmanuel S Dumaguing (GitHub: leon-sd)
+- Kyle Gitchell (GitHub: kagitche)
+- Course: CAS502
+
+**Project description**
+SkillNet Explorer is a small command-line tool for exploring how skills co-occur across occupations. Using O*NET skill importance data, it builds a weighted network where nodes are skills and edges indicate how often two skills appear together within the same occupation above a threshold. Given a skill code, the tool returns the top co-occurring (“neighbor”) skills ranked by edge weight and provides example occupations as evidence for each pairing.
+
+
+**Branching / PR workflow**
+- Default branch: `main`
+- For Module 3 setup and small fixes, we are committing directly to `main` to keep the workflow simple.
+- If we make larger changes (new features), we will create a feature branch and open a Pull Request before merging back to `main`.
+
+
+**Project planning docs**
+- Challenges: `Challenges.txt`
+- Communication plan: `Communications_Plan.txt`
+
+
 This is a starter repository for projects in the CAS502 class in the School of Complex Adaptive Systems at Arizona State University. If you choose to use the code in this repository for your project, please clone it into your own account and work with your clone.
 
 ## What the code does
