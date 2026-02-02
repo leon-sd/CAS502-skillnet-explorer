@@ -31,7 +31,7 @@ def build_skills_graph(path_to_skills):
     filtered_df = df.loc[(df["Scale ID"] == "IM") & (df["Data Value"] > 2.5)].copy()
     filtered_df = filtered_df.reset_index(drop=True)
 
-        # group data by O*NET-SOC Code so we can then iterate over each skill in each occupation
+    # group data by O*NET-SOC Code so we can then iterate over each skill in each occupation
     grouped_df = filtered_df.groupby("O*NET-SOC Code")
 
     skills_graph = nx.Graph()
@@ -78,13 +78,17 @@ for _, neighbor_id, _ in edges[:10]:
     neighbor_label = skills_graph.nodes[neighbor_id]["label"]
     occupations = skills_graph.nodes[neighbor_id]["occupations"]
 
-    intersection = sorted(
-        list(set(occupations_selected) & set(occupations)),
-        reverse=True,
-        key=lambda prof: prof[1],
-    )
+    intersection = list(set(occupations_selected) & set(occupations))
 
-    examples = ", ".join([f"{occup[0]} ({occup[1]})" for occup in intersection[:5]])
+    # Deduplicate by occupation title, keeping the highest Data Value for each title
+    best_by_title = {}
+    for title, value in intersection:
+        if (title not in best_by_title) or (value > best_by_title[title]):
+            best_by_title[title] = value
+
+    deduped = sorted(best_by_title.items(), key=lambda tv: tv[1], reverse=True)
+
+    examples = ", ".join([f"{title} ({value})" for title, value in deduped[:5]])
     print(f'"{neighbor_label} ({neighbor_id})" e.g. as {examples}')
     print()
 
