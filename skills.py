@@ -71,10 +71,10 @@ edges = sorted(
 )
 
 selected_label = skills_graph.nodes[selected_skill]["label"]
-print(f'\nOften used skills with "{selected_label} ({selected_skill})":')
+print(f'\nOften used skills with "{selected_label} ({selected_skill})":') # output heading
 
 occupations_selected = skills_graph.nodes[selected_skill]["occupations"]
-for _, neighbor_id, _ in edges[:10]:
+for _, neighbor_id, _ in edges[:10]: # number of related skills
     neighbor_label = skills_graph.nodes[neighbor_id]["label"]
     occupations = skills_graph.nodes[neighbor_id]["occupations"]
 
@@ -88,7 +88,6 @@ for _, neighbor_id, _ in edges[:10]:
 
     deduped = sorted(best_by_title.items(), key=lambda tv: tv[1], reverse=True)
 
-    examples = ", ".join([f"{title} ({value})" for title, value in deduped[:5]])
+    examples = ", ".join([f"{title} ({value})" for title, value in deduped[:5]]) # number of occupations related to a skill
     print(f'"{neighbor_label} ({neighbor_id})" e.g. as {examples}')
     print()
-
