@@ -70,8 +70,10 @@ edges = sorted(
     reverse=True,
 )
 
+# Create an output file
+file = open("skill_results.txt", "w")
 selected_label = skills_graph.nodes[selected_skill]["label"]
-print(f'\nOften used skills with "{selected_label} ({selected_skill})":')
+file.write(f'\nOften used skills with "{selected_label} ({selected_skill})":')
 
 occupations_selected = skills_graph.nodes[selected_skill]["occupations"]
 for _, neighbor_id, _ in edges[:10]:
@@ -89,6 +91,10 @@ for _, neighbor_id, _ in edges[:10]:
     deduped = sorted(best_by_title.items(), key=lambda tv: tv[1], reverse=True)
 
     examples = ", ".join([f"{title} ({value})" for title, value in deduped[:5]])
-    print(f'"{neighbor_label} ({neighbor_id})" e.g. as {examples}')
-    print()
+   
+    file.write(f'"{neighbor_label} ({neighbor_id})" e.g. as {examples}')
+    file.write(" ")
 
+
+file.close()
+print("Results saved to skill_results.txt!")
