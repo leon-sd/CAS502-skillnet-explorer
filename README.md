@@ -44,11 +44,13 @@ After creating the network, the script will ask the user to input a skill and th
 
 ## Set up
 
-To set up the project, clone the repository. You need the following packages installed:
+To set up the project, clone the repository. At a minimum You need the following packages installed:
 - pandas
 - openpyxl
 - networkx
 - matplotlib
+
+A complete list of software used and their versions can be found in `requirements.txt`.
 
 ## How to run the code
 
@@ -66,3 +68,14 @@ CSV file with a list of skills and their codes.
 This folder contains a number of data files. The files have been downloaded from [O*NET Resource Center](https://www.onetcenter.org/database.html), version 29.1 ([license](https://creativecommons.org/licenses/by/4.0/)). The file currently used in the code is `Skills.xlsx`. Additionally, there are two files in this folder:
   - `Occupation Data.xlsx`: Descriptions for each occupation.
   - `TechnologySkills.xlsx`: A list of technological skills for each occupation.
+- `.gitignore`
+- `Challenges.txt`
+Potential challenges our project team would face in this project.
+- `Communications_Plan.txt`
+The communications plan for our project team.
+- `LICENSE`
+The license and usage allowability.
+- `README.md`
+This informational document about the program.
+- `requirements.txt`
+The list of all software and versions used to build this code.
