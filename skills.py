@@ -75,7 +75,7 @@ if not matches:
 
 if not matches:
     raise SystemExit(f"No skills found matching: {selected_skill}")
-
+# If input partially matches multiple skills, list them for user and prompt re-entry
 if len(matches) > 1:
     print("Multiple matches found:")
     for m in matches:
