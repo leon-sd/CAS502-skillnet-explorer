@@ -28,7 +28,7 @@ This script will read the skills in `data/Skills.xlsx` (which is pretty much a l
 
 After creating the network, the script will ask the user to input a skill and then create a .csv with the first 10 skills most often used with the entered skill and 5 job types in which both skills are used, e.g.
 
-| Selected Skill |	Neighbor Skill |	Example Occupations |
+| Selected Skill |	Neighbor Skill |	Top Professions |
 | --- | --- | --- |
 | Mathematics (2.A.1.e) |	Active Listening (2.A.1.b)	| Allergists and Immunologists (4.5), Neuropsychologists (4.5), Preventive Medicine Physicians (4.38), School Psychologists (4.38), Urologists (4.38) |
 | Mathematics (2.A.1.e)	| Critical Thinking (2.A.2.a)	| Mathematicians (5.0), Statisticians (4.88), Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary (4.75), Social Work Teachers, Postsecondary (4.62), Biostatisticians (4.62) |
@@ -52,7 +52,7 @@ To set up the project, clone the repository. You need the following packages ins
 
 ## How to run the code
 
-To execute the tool, simply run `python skills.py`. It will run for a few moments and then ask you for a skill code. You can find the codes for each skill in the file `skills-list.csv` (e.g. `2.A.1.a` for "Reading Comprehension"). Once entered, the program will present you with a list of 10 skills are that are most often used in combination with the entered skill and the top five professions in which a skill is important for.
+To execute the tool, simply run `python skills.py`. It will run for a few moments and then ask you to input a skill. You can find the codes and titles for each skill in the file `skills-list.csv` (e.g. `2.A.1.a` for "Reading Comprehension"). Once entered, the program will produce a file labeled `skill_results.csv` with a list of 10 skills are that are most often used in combination with the entered skill and the top five professions in which a skill is important for. If the skill input field is left blank, the program will prompt you to input a skill and close. If there is no skill matching the ones listed in `skills-list.csv`, the program will prompt you that no matching skill was found and close. If you entere a skill that partially matches multiple skills from the list (either a partial code match or partial name match), the program will list all of the partially matched values and ask you to input more specificity.
 
 ## Repository content
 
@@ -66,7 +66,3 @@ CSV file with a list of skills and their codes.
 This folder contains a number of data files. The files have been downloaded from [O*NET Resource Center](https://www.onetcenter.org/database.html), version 29.1 ([license](https://creativecommons.org/licenses/by/4.0/)). The file currently used in the code is `Skills.xlsx`. Additionally, there are two files in this folder:
   - `Occupation Data.xlsx`: Descriptions for each occupation.
   - `TechnologySkills.xlsx`: A list of technological skills for each occupation.
-
-## Notes
-
-This repository is intentially left pretty barebone, so you can use it for all the assignments in CAS502.
