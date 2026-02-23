@@ -116,7 +116,7 @@ for _, neighbor_id, _ in edges[:10]:
     rows.append({
         "Selected Skill": f"{selected_label} ({selected_skill})",
         "Neighbor Skill": f"{neighbor_label} ({neighbor_id})",
-        "Example Occupations": ", ".join([f"{title} ({value})" for title, value in deduped[:5]]) 
+        "Top Professions": ", ".join([f"{title} ({value})" for title, value in deduped[:5]]) 
     }) 
 
 # Save as CSV output
