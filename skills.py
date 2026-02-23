@@ -70,19 +70,19 @@ edges = sorted(
     reverse=True,
 )
 
-# Create an output file
-file = open("skill_results.txt", "w")
+# Build CSV rows 
+rows = []
 selected_label = skills_graph.nodes[selected_skill]["label"]
-file.write(f'\nOften used skills with "{selected_label} ({selected_skill})":')
-
 occupations_selected = skills_graph.nodes[selected_skill]["occupations"]
+
+# Identify number of related skills to display in search
 for _, neighbor_id, _ in edges[:10]:
     neighbor_label = skills_graph.nodes[neighbor_id]["label"]
     occupations = skills_graph.nodes[neighbor_id]["occupations"]
 
     intersection = list(set(occupations_selected) & set(occupations))
 
-    # Deduplicate by occupation title, keeping the highest Data Value for each title
+    # Deduplicate by occupation title, keeping the highest Data Value
     best_by_title = {}
     for title, value in intersection:
         if (title not in best_by_title) or (value > best_by_title[title]):
@@ -90,11 +90,15 @@ for _, neighbor_id, _ in edges[:10]:
 
     deduped = sorted(best_by_title.items(), key=lambda tv: tv[1], reverse=True)
 
-    examples = ", ".join([f"{title} ({value})" for title, value in deduped[:5]])
-   
-    file.write(f'"{neighbor_label} ({neighbor_id})" e.g. as {examples}')
-    file.write(" ")
+    # Move search results to CSV shape
+    rows.append({
+        "Selected Skill": f"{selected_label} ({selected_skill})",
+        "Neighbor Skill": f"{neighbor_label} ({neighbor_id})",
+        "Example Occupations": ", ".join([f"{title} ({value})" for title, value in deduped[:5]]) 
+    }) 
 
+# Save as CSV output
+df_out = pd.DataFrame(rows)
+df_out.to_csv("skill_results.csv", index=False)
 
-file.close()
-print("Results saved to skill_results.txt!")
+print("Results saved to skill_results.csv!")
