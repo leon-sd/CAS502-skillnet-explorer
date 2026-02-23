@@ -21,21 +21,26 @@ SkillNet Explorer is a small command-line tool for exploring how skills co-occur
 - Challenges: `Challenges.txt`
 - Communication plan: `Communications_Plan.txt`
 
-
-This is a starter repository for projects in the CAS502 class in the School of Complex Adaptive Systems at Arizona State University. If you choose to use the code in this repository for your project, please clone it into your own account and work with your clone.
-
 ## What the code does
 
 This script will read the skills in `data/Skills.xlsx` (which is pretty much a list of types of jobs and what skills each job requires) and create a weighted graph from it. Each skill is identified by an "Element ID" of the form `Number.Letter.Number.letter` (e.g. `2.A.1.a`). The script will create a node for each skill id and if two skills are used in the same job type, the nodes will be connected. The more often two skills are used together for a job type, the greater the weight on the edge between those two nodes. The resulting network looks something like that (darker and thicker edges have more weight):
 ![Network Image](img/networkjpg.jpg)
 
-After creating the network, the script will ask the user for a skill id and then print the first 10 skills most often used with the entered skill and 5 job types in which both skills are used, e.g.
+After creating the network, the script will ask the user to input a skill and then create a .csv with the first 10 skills most often used with the entered skill and 5 job types in which both skills are used, e.g.
 
-```
-Often used skills with "Active Learning (2.A.2.b)":
-"Active Listening (2.A.1.b)" e.g. as Judges, Magistrate Judges, and Magistrates (5.0), Marriage and Family Therapists (4.88), Child, Family, and School Social Workers (4.88), Editors (4.88), Historians (4.75)
-...
-```
+| Selected Skill |	Neighbor Skill |	Example Occupations |
+| --- | --- | --- |
+| Mathematics (2.A.1.e) |	Active Listening (2.A.1.b)	| Allergists and Immunologists (4.5), Neuropsychologists (4.5), Preventive Medicine Physicians (4.38), School Psychologists (4.38), Urologists (4.38) |
+| Mathematics (2.A.1.e)	| Critical Thinking (2.A.2.a)	| Mathematicians (5.0), Statisticians (4.88), Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary (4.75), Social Work Teachers, Postsecondary (4.62), Biostatisticians (4.62) |
+| Mathematics (2.A.1.e)	| Speaking (2.A.1.d) |	Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary (4.75), Social Work Teachers, Postsecondary (4.62), Allergists and Immunologists (4.5), Neuropsychologists (4.5), Preventive Medicine Physicians (4.38) |
+| Mathematics (2.A.1.e)	| Monitoring (2.A.2.d) |	Mathematicians (5.0), Statisticians (4.88), Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary (4.75), Social Work Teachers, Postsecondary (4.62), Biostatisticians (4.62) |
+| Mathematics (2.A.1.e)	| Reading Comprehension (2.A.1.a)	| Allergists and Immunologists (4.5), Neuropsychologists (4.5), Preventive Medicine Physicians (4.38), Biochemists and Biophysicists (4.38), Health Informatics Specialists (4.38)
+| Mathematics (2.A.1.e)	| Coordination (2.B.1.b)	| Mathematicians (5.0), Statisticians (4.88), Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary (4.75), Social Work Teachers, Postsecondary (4.62), Biostatisticians (4.62) |
+| Mathematics (2.A.1.e)	| Judgment and Decision Making (2.B.4.e)	| Mathematicians (5.0), Statisticians (4.88), Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary (4.75), Social Work Teachers, Postsecondary (4.62), Biostatisticians (4.62) |
+| Mathematics (2.A.1.e)	| Time Management (2.B.5.a)	| Mathematicians (5.0), Statisticians (4.88), Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary (4.75), Social Work Teachers, Postsecondary (4.62), Biostatisticians (4.62) |
+| Mathematics (2.A.1.e)	| Complex Problem Solving (2.B.2.i)	| Mathematicians (5.0), Statisticians (4.88), Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary (4.75), Social Work Teachers, Postsecondary (4.62), Biostatisticians (4.62) |
+| Mathematics (2.A.1.e)	| Social Perceptiveness (2.B.1.a)	| Mathematicians (5.0), Statisticians (4.88), Atmospheric, Earth, Marine, and Space Sciences Teachers, Postsecondary (4.75), Social Work Teachers, Postsecondary (4.62), Biostatisticians (4.62) |
+
 
 ## Set up
 
