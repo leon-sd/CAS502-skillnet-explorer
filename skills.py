@@ -95,10 +95,10 @@ edges = sorted(
 # Build CSV rows 
 rows = []
 selected_label = skills_graph.nodes[selected_skill]["label"]
-occupations_selected = skills_graph.nodes[selected_skill]["occupations"]
+print(f'\nOften used skills with "{selected_label} ({selected_skill})":') # output heading
 
-# Identify number of related skills to display in search
-for _, neighbor_id, _ in edges[:10]:
+occupations_selected = skills_graph.nodes[selected_skill]["occupations"]
+for _, neighbor_id, _ in edges[:10]: # number of related skills
     neighbor_label = skills_graph.nodes[neighbor_id]["label"]
     occupations = skills_graph.nodes[neighbor_id]["occupations"]
 
@@ -112,15 +112,6 @@ for _, neighbor_id, _ in edges[:10]:
 
     deduped = sorted(best_by_title.items(), key=lambda tv: tv[1], reverse=True)
 
-    # Move search results to CSV shape
-    rows.append({
-        "Selected Skill": f"{selected_label} ({selected_skill})",
-        "Neighbor Skill": f"{neighbor_label} ({neighbor_id})",
-        "Top Professions": ", ".join([f"{title} ({value})" for title, value in deduped[:5]]) 
-    }) 
-
-# Save as CSV output
-df_out = pd.DataFrame(rows)
-df_out.to_csv("skill_results.csv", index=False)
-
-print("Results saved to skill_results.csv!")
+    examples = ", ".join([f"{title} ({value})" for title, value in deduped[:5]]) # number of occupations related to a skill
+    print(f'"{neighbor_label} ({neighbor_id})" e.g. as {examples}')
+    print()
