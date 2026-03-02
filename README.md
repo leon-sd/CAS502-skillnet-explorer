@@ -56,6 +56,10 @@ A complete list of software used and their versions can be found in `requirement
 
 To execute the tool, simply run `python skills.py`. It will run for a few moments and then ask you to input a skill. You can find the codes and titles for each skill in the file `skills-list.csv` (e.g. `2.A.1.a` for "Reading Comprehension"). Once entered, the program will produce a file labeled `skill_results.csv` with a list of 10 skills are that are most often used in combination with the entered skill and the top five professions in which a skill is important for. If the skill input field is left blank, the program will prompt you to input a skill and close. If there is no skill matching the ones listed in `skills-list.csv`, the program will prompt you that no matching skill was found and close. If you entere a skill that partially matches multiple skills from the list (either a partial code match or partial name match), the program will list all of the partially matched values and ask you to input more specificity.
 
+## Bug Reporting, Feature Requests, and Updates
+
+This repository is a part of a project for CAS502 CAS Computation at ASU Spring 2026. We will not be providing additional updates to the repository beyond the end point of this project at the end of the course. If you find bugs or want to add new features or updates then please do so by creating a fork and making those changes within your own repository.
+
 ## Repository content
 
 The following files are part of this repository:
