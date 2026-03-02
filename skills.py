@@ -56,13 +56,35 @@ def build_skills_graph(path_to_skills):
 
 skills_graph = build_skills_graph("data/Skills.xlsx")
 
-selected_skill = input("Enter the code of a skill: ").strip()
+# Prompt user for skill input
+selected_skill = input("Enter a skill: ").strip()
 
+# Prompt user if input is empty
 if not selected_skill:
-    raise SystemExit('No skill code entered. Example: 2.B.3.e')
+    raise SystemExit('No skill entered. Example: 2.B.3.e or Programming')
 
-if selected_skill not in skills_graph:
-    raise SystemExit(f"Skill code not found: {selected_skill}")
+# Find partial matches in Element ID
+matches = [node for node in skills_graph.nodes if selected_skill.lower() in node.lower()]
+
+# Find partial matches in Element Name
+if not matches:
+    matches = [
+        node for node, data in skills_graph.nodes(data=True)
+        if selected_skill.lower() in data["label"].lower()
+    ]
+
+if not matches:
+    raise SystemExit(f"No skills found matching: {selected_skill}")
+# If input partially matches multiple skills, list them for user and prompt re-entry
+if len(matches) > 1:
+    print("Multiple matches found:")
+    for m in matches:
+        print(f" - {m}: {skills_graph.nodes[m]['label']}")
+    raise SystemExit("Please enter a more specific search term.")
+
+# Exactly one match → use it
+selected_skill = matches[0]
+print(f"Using skill: {selected_skill} ({skills_graph.nodes[selected_skill]['label']})")
 
 edges = sorted(
     skills_graph.edges(selected_skill, data=True),
@@ -70,6 +92,8 @@ edges = sorted(
     reverse=True,
 )
 
+# Build CSV rows 
+rows = []
 selected_label = skills_graph.nodes[selected_skill]["label"]
 print(f'\nOften used skills with "{selected_label} ({selected_skill})":') # output heading
 
@@ -80,7 +104,7 @@ for _, neighbor_id, _ in edges[:10]: # number of related skills
 
     intersection = list(set(occupations_selected) & set(occupations))
 
-    # Deduplicate by occupation title, keeping the highest Data Value for each title
+    # Deduplicate by occupation title, keeping the highest Data Value
     best_by_title = {}
     for title, value in intersection:
         if (title not in best_by_title) or (value > best_by_title[title]):
