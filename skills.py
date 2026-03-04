@@ -2,11 +2,15 @@ import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
 
-
+# Store occupation evidence on each skill node, but avoid duplicate
+# (Title, Data Value) pairs if the same relationship is encountered again.
 def add_occupation(skills_graph, node_id, row):
     if (row['Title'], row['Data Value']) not in skills_graph.nodes[node_id]['occupations']:
         skills_graph.nodes[node_id]['occupations'].append((row['Title'], row['Data Value']))
 
+# Create or update the connection between the current skill and a later skill
+# in the same occupation group. Using only later rows avoids double-counting
+# edges in this undirected graph.
 def add_neighbor(skills_graph, group, neighbor_idx, current_node, row):
     neighbor_node = group.iloc[neighbor_idx]['Element ID']
     # we dont' want loops to self
@@ -15,7 +19,8 @@ def add_neighbor(skills_graph, group, neighbor_idx, current_node, row):
 
     if not skills_graph.has_node(neighbor_node):
         skills_graph.add_node(neighbor_node, label=group.iloc[neighbor_idx]['Element Name'], occupations=[])
-        
+    # Copy the current occupation evidence onto the neighboring skill node so
+    # later output can show example occupations shared by both skills.    
     add_occupation(skills_graph, neighbor_node, row)
 
     if not skills_graph.has_edge(current_node, neighbor_node):
@@ -64,7 +69,8 @@ if __name__ == "__main__":
     if not selected_skill:
         raise SystemExit('No skill entered. Example: 2.B.3.e or Programming')
 
-    # Find partial matches in Element ID
+    # Search codes first so short inputs like "2.B.3" can match Element IDs
+    # before falling back to a broader search over skill names.
     matches = [node for node in skills_graph.nodes if selected_skill.lower() in node.lower()]
 
     # Find partial matches in Element Name
@@ -105,8 +111,8 @@ if __name__ == "__main__":
         occupations = skills_graph.nodes[neighbor_id]["occupations"]
 
         intersection = list(set(occupations_selected) & set(occupations))
-
-        # Deduplicate by occupation title, keeping the highest Data Value
+        # The same occupation title can appear more than once in the shared
+        # evidence list, so keep only the highest Data Value for each title.
         best_by_title = {}
         for title, value in intersection:
             if (title not in best_by_title) or (value > best_by_title[title]):
