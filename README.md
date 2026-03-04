@@ -26,7 +26,7 @@ SkillNet Explorer is a small command-line tool for exploring how skills co-occur
 This script will read the skills in `data/Skills.xlsx` (which is pretty much a list of types of jobs and what skills each job requires) and create a weighted graph from it. Each skill is identified by an "Element ID" of the form `Number.Letter.Number.letter` (e.g. `2.A.1.a`). The script will create a node for each skill id and if two skills are used in the same job type, the nodes will be connected. The more often two skills are used together for a job type, the greater the weight on the edge between those two nodes. The resulting network looks something like that (darker and thicker edges have more weight):
 ![Network Image](img/networkjpg.jpg)
 
-After creating the network, the script will ask the user to input a skill and then create a .csv with the first 10 skills most often used with the entered skill and 5 job types in which both skills are used, e.g.
+After creating the network, the script will ask the user to input a skill and then print the first 10 skills most often used with the entered skill and 5 job types in which both skills are used, e.g.
 
 | Selected Skill |	Neighbor Skill |	Top Professions |
 | --- | --- | --- |
@@ -73,8 +73,7 @@ To run the unit tests for the project, use:
 
 `python -m unittest test_skills.py`
 
-If the tests pass, Python will report that 3 tests ran successfully and display `OK`.solving. Please keep changes small, readable, and documented, and update any relevant documentation if your change affects setup or usage.
-
+If the tests pass, Python will report that 3 tests ran successfully and display `OK`.
 ## Contributing
 
 If you would like to contribute, please fork the repository and make your changes in your own copy. For larger changes, create a feature branch and clearly describe what problem your change is solving. Please keep changes small, readable, and documented, and update any relevant documentation if your change affects setup or usage.
