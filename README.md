@@ -54,7 +54,6 @@ A complete list of software used and their versions can be found in `requirement
 
 ## How to run the code
 
-
 To execute the tool, run:
 
 `python skills.py`
@@ -74,7 +73,7 @@ To run the unit tests for the project, use:
 
 `python -m unittest test_skills.py`
 
-If the tests pass, Python will report that 3 tests ran successfully and display `OK`.
+If the tests pass, Python will report that 3 tests ran successfully and display `OK`.solving. Please keep changes small, readable, and documented, and update any relevant documentation if your change affects setup or usage.
 
 ## Contributing
 
