@@ -54,64 +54,66 @@ def build_skills_graph(path_to_skills):
 
 
 
-skills_graph = build_skills_graph("data/Skills.xlsx")
+if __name__ == "__main__":
+    skills_graph = build_skills_graph("data/Skills.xlsx")
 
-# Prompt user for skill input
-selected_skill = input("Enter a skill: ").strip()
+    # Prompt user for skill input
+    selected_skill = input("Enter a skill: ").strip()
 
-# Prompt user if input is empty
-if not selected_skill:
-    raise SystemExit('No skill entered. Example: 2.B.3.e or Programming')
+    # Prompt user if input is empty
+    if not selected_skill:
+        raise SystemExit('No skill entered. Example: 2.B.3.e or Programming')
 
-# Find partial matches in Element ID
-matches = [node for node in skills_graph.nodes if selected_skill.lower() in node.lower()]
+    # Find partial matches in Element ID
+    matches = [node for node in skills_graph.nodes if selected_skill.lower() in node.lower()]
 
-# Find partial matches in Element Name
-if not matches:
-    matches = [
-        node for node, data in skills_graph.nodes(data=True)
-        if selected_skill.lower() in data["label"].lower()
-    ]
+    # Find partial matches in Element Name
+    if not matches:
+        matches = [
+            node for node, data in skills_graph.nodes(data=True)
+            if selected_skill.lower() in data["label"].lower()
+        ]
 
-if not matches:
-    raise SystemExit(f"No skills found matching: {selected_skill}")
-# If input partially matches multiple skills, list them for user and prompt re-entry
-if len(matches) > 1:
-    print("Multiple matches found:")
-    for m in matches:
-        print(f" - {m}: {skills_graph.nodes[m]['label']}")
-    raise SystemExit("Please enter a more specific search term.")
+    if not matches:
+        raise SystemExit(f"No skills found matching: {selected_skill}")
 
-# Exactly one match → use it
-selected_skill = matches[0]
-print(f"Using skill: {selected_skill} ({skills_graph.nodes[selected_skill]['label']})")
+    # If input partially matches multiple skills, list them for user and prompt re-entry
+    if len(matches) > 1:
+        print("Multiple matches found:")
+        for m in matches:
+            print(f" - {m}: {skills_graph.nodes[m]['label']}")
+        raise SystemExit("Please enter a more specific search term.")
 
-edges = sorted(
-    skills_graph.edges(selected_skill, data=True),
-    key=lambda edge: edge[2].get("weight", 1),
-    reverse=True,
-)
+    # Exactly one match → use it
+    selected_skill = matches[0]
+    print(f"Using skill: {selected_skill} ({skills_graph.nodes[selected_skill]['label']})")
 
-# Build CSV rows 
-rows = []
-selected_label = skills_graph.nodes[selected_skill]["label"]
-print(f'\nOften used skills with "{selected_label} ({selected_skill})":') # output heading
+    edges = sorted(
+        skills_graph.edges(selected_skill, data=True),
+        key=lambda edge: edge[2].get("weight", 1),
+        reverse=True,
+    )
 
-occupations_selected = skills_graph.nodes[selected_skill]["occupations"]
-for _, neighbor_id, _ in edges[:10]: # number of related skills
-    neighbor_label = skills_graph.nodes[neighbor_id]["label"]
-    occupations = skills_graph.nodes[neighbor_id]["occupations"]
+    # Build CSV rows
+    rows = []
+    selected_label = skills_graph.nodes[selected_skill]["label"]
+    print(f'\nOften used skills with "{selected_label} ({selected_skill})":')  # output heading
 
-    intersection = list(set(occupations_selected) & set(occupations))
+    occupations_selected = skills_graph.nodes[selected_skill]["occupations"]
+    for _, neighbor_id, _ in edges[:10]:  # number of related skills
+        neighbor_label = skills_graph.nodes[neighbor_id]["label"]
+        occupations = skills_graph.nodes[neighbor_id]["occupations"]
 
-    # Deduplicate by occupation title, keeping the highest Data Value
-    best_by_title = {}
-    for title, value in intersection:
-        if (title not in best_by_title) or (value > best_by_title[title]):
-            best_by_title[title] = value
+        intersection = list(set(occupations_selected) & set(occupations))
 
-    deduped = sorted(best_by_title.items(), key=lambda tv: tv[1], reverse=True)
+        # Deduplicate by occupation title, keeping the highest Data Value
+        best_by_title = {}
+        for title, value in intersection:
+            if (title not in best_by_title) or (value > best_by_title[title]):
+                best_by_title[title] = value
 
-    examples = ", ".join([f"{title} ({value})" for title, value in deduped[:5]]) # number of occupations related to a skill
-    print(f'"{neighbor_label} ({neighbor_id})" e.g. as {examples}')
-    print()
+        deduped = sorted(best_by_title.items(), key=lambda tv: tv[1], reverse=True)
+
+        examples = ", ".join([f"{title} ({value})" for title, value in deduped[:5]])  # number of occupations related to a skill
+        print(f'"{neighbor_label} ({neighbor_id})" e.g. as {examples}')
+        print()
