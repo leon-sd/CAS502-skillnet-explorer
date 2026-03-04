@@ -54,7 +54,27 @@ A complete list of software used and their versions can be found in `requirement
 
 ## How to run the code
 
-To execute the tool, simply run `python skills.py`. It will run for a few moments and then ask you to input a skill. You can find the codes and titles for each skill in the file `skills-list.csv` (e.g. `2.A.1.a` for "Reading Comprehension"). Once entered, the program will produce a file labeled `skill_results.csv` with a list of 10 skills are that are most often used in combination with the entered skill and the top five professions in which a skill is important for. If the skill input field is left blank, the program will prompt you to input a skill and close. If there is no skill matching the ones listed in `skills-list.csv`, the program will prompt you that no matching skill was found and close. If you entere a skill that partially matches multiple skills from the list (either a partial code match or partial name match), the program will list all of the partially matched values and ask you to input more specificity.
+
+To execute the tool, run:
+
+`python skills.py`
+
+The program will load the O*NET skills data and then prompt you to enter a skill. You can enter either a full skill code (for example `2.A.1.a`) or a partial skill/code search term. The script then prints the top related skills and example occupations directly to the console.
+
+Behavior notes:
+- If the input is blank, the program exits with an error message.
+- If no skill matches the input, the program exits with an error message.
+- If multiple partial matches are found, the program lists the matches and asks the user to be more specific.
+
+The skill codes and titles can be found in `skills-list.csv`.
+
+## Running tests
+
+To run the unit tests for the project, use:
+
+`python -m unittest test_skills.py`
+
+If the tests pass, Python will report that 3 tests ran successfully and display `OK`.
 
 ## Contributing
 
